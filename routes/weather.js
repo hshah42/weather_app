@@ -3,16 +3,11 @@ const axios = require("axios");
 const router = express.Router();
 const geoip = require("geoip-lite");
 
-const apiKey = "41eb812a594005f48d77495b29d05ec8"
-const defaultCity = "New York";
+const propertiesReader = require("properties-reader");
+const properties = propertiesReader('app.properties');
 
-function setApiKey(apiKey)
-{
-    if(apiKey)
-    {
-        this.apiKey = apiKey;
-    }
-}
+let apiKey = "41eb812a594005f48d77495b29d05ec8"
+const defaultCity = "New York";
 
 router.get("/", async (req, res) => {
     
@@ -20,6 +15,11 @@ router.get("/", async (req, res) => {
     let useName = false;
     let locationData =  geoip.lookup(req.ip);
 
+    if(properties.get("api.key"))
+    {
+        apiKey = properties.get("api.key");
+    }
+    
     if(req.query.search)
     {
         name = req.query.search;
@@ -216,4 +216,4 @@ async function getBackground(id)
     }
 }
 
-module.exports = {router, setApiKey};
+module.exports = {router};

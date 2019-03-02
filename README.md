@@ -2,8 +2,9 @@ Weather Forecast Website
 
 To run the website on the local machine, follow the following commands:
 
-1. npm install
-2. npm start
+1. Change the api key in app.properties
+2. npm install
+3. npm start
 
 The website is also live at http://34.73.204.225:3000.
 
