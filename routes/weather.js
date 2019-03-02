@@ -6,6 +6,14 @@ const geoip = require("geoip-lite");
 const apiKey = "41eb812a594005f48d77495b29d05ec8"
 const defaultCity = "New York";
 
+function setApiKey(apiKey)
+{
+    if(apiKey)
+    {
+        this.apiKey = apiKey;
+    }
+}
+
 router.get("/", async (req, res) => {
     
     let name;
@@ -208,4 +216,4 @@ async function getBackground(id)
     }
 }
 
-module.exports = router;
+module.exports = {router, setApiKey};
