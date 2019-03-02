@@ -12,3 +12,5 @@ It automatically determines the location based on the ip of the user in the requ
 User can search and get weather conditions of different cities by using the search bar. Displays an error if city does not exist or any issue in getting the data.
 Graph shows 2 types of data - hourly forcast for 3 hour interval and by a days interval for the next 5 days.
 Background of the website is determined based on the current weather conditions.
+
+The app will be running at port 3000.
