@@ -7,10 +7,9 @@ const apiKey = "41eb812a594005f48d77495b29d05ec8"
 const defaultCity = "New York";
 
 router.get("/", async (req, res) => {
+    
     let name;
-
-    console.log(req.ip)
-    console.log(geoip.lookup(req.ip));
+    let locationData =  geoip.lookup(req.ip);
 
     if(req.query.search)
     {
@@ -23,9 +22,18 @@ router.get("/", async (req, res) => {
 
     try
     {
-        let weatherAPI = await axios.get("http://api.openweathermap.org/data/2.5/weather?APPID="+ apiKey +"&units=imperial&q=" + name);
+        let weatherAPI;
+        
+        if(locationData && locationData.ll)
+        {
+            weatherAPI = await axios.get("http://api.openweathermap.org/data/2.5/weather?APPID="+ apiKey +"&units=imperial&lat=" + locationData.ll[0] + "&lon="+ locationData.ll[1]);
+        }
+        else
+        {
+            weatherAPI = await axios.get("http://api.openweathermap.org/data/2.5/weather?APPID="+ apiKey +"&units=imperial&q=" + name);
+        }
+        
         let result = await getResult(weatherAPI, name);
-
         res.render("layouts/main", result);
     }
     catch(e)

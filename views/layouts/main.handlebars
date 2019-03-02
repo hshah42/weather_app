@@ -31,9 +31,9 @@
                 <br/>
                 <div class="row">
                     <div class="col-lg-8">
-                        <h5 class="text-secondary">Temperature: {{ current.currentTemperature }}&#8457;</h5>
-                        <h5 class="text-secondary">Temperature Max: {{ current.maxTemperature }}&#8457;</h5>
-                        <h5 class="text-secondary">Temperature Min: {{ current.minTemperature }}&#8457;</h5>
+                        <h5 class="text-secondary">Current Temperature: {{ current.currentTemperature }}&#8457;</h5>
+                        <h5 class="text-secondary">Max Temperature: {{ current.maxTemperature }}&#8457;</h5>
+                        <h5 class="text-secondary">Min Temperature: {{ current.minTemperature }}&#8457;</h5>
                         <h5 class="text-secondary">Humidity: {{ current.humidity }}%</h5>
                         <h5 class="text-secondary">Wind Speed: {{ current.windSpeed }} miles/hour</h5>
                         <h5 class="text-secondary">Wind Direction: {{ current.windDirection }}&#176;</h5>
@@ -46,7 +46,7 @@
                             </div>
                             <div class="col-lg-8">
                                 {{#each current.weather}}
-                                    <h5 class="text-secondary" style="margin-top: -5%; margin-bottom: 5%"><img src="http://openweathermap.org/img/w/{{ icon }}.png">{{ main }}</h5>
+                                    <h5 class="text-secondary" style="margin-top: -5%; margin-bottom: 3%"><img src="http://openweathermap.org/img/w/{{ icon }}.png">{{ main }}</h5>
                                 {{/each}}
                             </div>
                         </div>
