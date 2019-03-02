@@ -20,26 +20,47 @@ router.get("/", async (req, res) => {
     try
     {
         let weatherAPI = await axios.get("http://api.openweathermap.org/data/2.5/weather?APPID="+ apiKey +"&units=imperial&q=" + name);
+        let result = await getResult(weatherAPI, name);
 
-        let currentWeather;
-        let type;
-        let forecast;
-
-        if(weatherAPI.status === 200)
-        {
-            let weatherData = weatherAPI.data;
-            currentWeather = await getCurrentWeather(weatherData);
-            type = await getBackground(weatherData.weather[0].id);
-            forecast = await getForecast(name);
-        }
-
-        res.render("layouts/main", {current: currentWeather, background: type, forecast: forecast});
+        res.render("layouts/main", result);
     }
     catch(e)
     {
-        res.status(500).json({error: "error in fetching data"});
+        if(e.response && e.response.status === 404)
+        {
+            let weatherAPI = await axios.get("http://api.openweathermap.org/data/2.5/weather?APPID="+ apiKey +"&units=imperial&q=" + defaultCity);
+            let result = await getResult(weatherAPI, defaultCity);
+            result["hasError"] = true;
+            result["error"] = "City not found"
+            res.render("layouts/main", result);
+        }
+        else
+        {
+            res.status(500).render("layouts/main", {hasError: true, error : "error in fetching data"});
+        }
     }
 });
+
+async function getResult(weatherAPI, name)
+{
+    let currentWeather;
+    let type;
+    let forecast;
+
+    if(weatherAPI.status === 200)
+    {
+        let weatherData = weatherAPI.data;
+        currentWeather = await getCurrentWeather(weatherData);
+        type = await getBackground(weatherData.weather[0].id);
+        forecast = await getForecast(name);
+    }
+
+    return {
+        current: currentWeather, 
+        background: type, 
+        forecast: forecast
+    };
+}
 
 async function getCurrentWeather(weatherData)
 {    
@@ -59,6 +80,8 @@ async function getCurrentWeather(weatherData)
         "maxTemperature": weatherData.main.temp_max,
         "minTemperature": weatherData.main.temp_min,
         "weather": weatherData.weather,
+        "windSpeed": weatherData.wind.speed,
+        "windDirection": weatherData.wind.deg,
         "weatherDesc": weatherDescJoin
     }
 
