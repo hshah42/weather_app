@@ -1,12 +1,16 @@
 const express = require("express");
 const axios = require("axios");
 const router = express.Router();
+const geoip = require("geoip-lite");
 
 const apiKey = "41eb812a594005f48d77495b29d05ec8"
 const defaultCity = "New York";
 
 router.get("/", async (req, res) => {
     let name;
+
+    console.log(req.ip)
+    console.log(geoip.lookup(req.ip));
 
     if(req.query.search)
     {
@@ -190,7 +194,7 @@ async function getBackground(id)
     }
     else
     {
-
+        return "default";
     }
 }
 
