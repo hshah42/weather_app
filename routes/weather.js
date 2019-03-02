@@ -9,11 +9,13 @@ const defaultCity = "New York";
 router.get("/", async (req, res) => {
     
     let name;
+    let useName = false;
     let locationData =  geoip.lookup(req.ip);
 
     if(req.query.search)
     {
         name = req.query.search;
+        useName = true;
     }
     else
     {
@@ -24,7 +26,7 @@ router.get("/", async (req, res) => {
     {
         let weatherAPI;
         
-        if(locationData && locationData.ll)
+        if(locationData && locationData.ll && !useName)
         {
             weatherAPI = await axios.get("http://api.openweathermap.org/data/2.5/weather?APPID="+ apiKey +"&units=imperial&lat=" + locationData.ll[0] + "&lon="+ locationData.ll[1]);
         }
