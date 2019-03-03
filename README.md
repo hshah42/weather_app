@@ -2,6 +2,11 @@ Weather Forecast Website
 
 To run the website on the local machine, follow the following commands:
 
+Prerequisites:
+1. Install NodeJs on your local machine with a version 8 or above.
+2. If a version below 8 is installed, install nvm to change the version.
+3. After installing NodeJS, install npm with version 5.6 or above
+
 1. Change the api key in app.properties
 2. npm install
 3. npm start
